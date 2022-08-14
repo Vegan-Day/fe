@@ -1,4 +1,5 @@
-import GoogleLogin from "./Login/GoogleLogin";
+import GoogleLogin from "./components/Login/GoogleLogin";
+
 
 function App() {
 return (
