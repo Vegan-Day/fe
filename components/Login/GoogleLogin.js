@@ -50,11 +50,12 @@ function GoogleLogin() {
     <View style={styles.container}>
       <TouchableOpacity
         disabled={!request}
-        onPress={() => {
-          promptAsync();
+        onPress={response ?
+          null:  () => {
+            promptAsync()
         }}
       >
-        <Text> "구글로 로그인하기"</Text>
+        <Text> {response? "로그인 성공" : "구글로 로그인하기"}</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
