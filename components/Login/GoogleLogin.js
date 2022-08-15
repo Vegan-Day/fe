@@ -23,7 +23,7 @@ function GoogleLogin() {
 
   //백엔드 요청
 
-  console.log(response?.params.id_token);
+  console.log("왜 안돼",response?.params.id_token);
   // var xhr = new XMLHttpRequest();
   // xhr.open('POST', '서버주소알려줄게있다가/tokensignin');
   // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
