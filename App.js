@@ -1,10 +1,12 @@
-import GoogleLogin from "./components/Login/GoogleLogin";
-
+import GoogleLogin from "./Login/GoogleLogin";
 
 function App() {
-return (
-  <GoogleLogin></GoogleLogin>
-)
-};
+  return (
+    <NavigationContainer>
+      <Header />
+      <Menu />
+    </NavigationContainer>
+  );
+}
 
 export default App;
