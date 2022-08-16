@@ -1,25 +1,31 @@
-import React, { useState } from 'react';
-import { Text, StyleSheet, View, TextInput, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  Text,
+  StyleSheet,
+  View,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import { theme } from '../color';
-import Writing from '../components/writing/writing';
+import CommunityList from '../components/community_list/community_list';
+import { EvilIcons } from '@expo/vector-icons';
+import axios from 'axios';
+import { URL } from '@env';
 
-const ComunityScreen = (props) => {
-  const [writings, setWritings] = useState([
-    {
-      title: '비건',
-      userId: 'leeseongho',
-      writeDt: '2022/08/15',
-      hit: 5,
-      comment: 5,
-    },
-    {
-      title: '비건2',
-      userId: 'leeseongho2',
-      writeDt: '2022/08/16',
-      hit: 5,
-      comment: 5,
-    },
-  ]);
+const CommunityScreen = ({ navigation }) => {
+  const [lists, setLists] = useState([]);
+
+  // const Stack = createStackNavigator();
+
+  // function StackNavigation() {
+  //   return (
+  //     <Stack.Navigator>
+  //       <Stack.Screen name='CommunityScreen' component={ComunityScreen} />
+  //       <Stack.Screen name='CommunityWrite' component={CommunityWrite} />
+  //     </Stack.Navigator>
+  //   );
+  // }
 
   return (
     <View style={styles.container}>
@@ -27,11 +33,29 @@ const ComunityScreen = (props) => {
         <Text style={styles.title}>전체글</Text>
         <TextInput style={styles.input} placeholder='검색...' />
       </View>
-      <ScrollView>
-        {writings.map((writing) => (
-          <Writing key={writing.userId} writing={writing} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {lists.map((list) => (
+          <CommunityList key={list.userId} list={list} />
         ))}
       </ScrollView>
+      <TouchableOpacity
+        style={{
+          backgroundColor: theme.mainColor,
+          position: 'relative',
+          left: 320,
+          bottom: 150,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 35,
+          width: 50,
+          height: 50,
+        }}
+        onPress={() => {
+          navigation.navigate('CommunityWrite');
+        }}
+      >
+        <EvilIcons name='pencil' size={40} color='white' />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -63,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ComunityScreen;
+export default CommunityScreen;

@@ -1,3 +1,4 @@
 {
-  "explorer.compactFolders": false
+  "explorer.compactFolders": false,
+  "editor.foldingMaximumRegions": 10000
 }

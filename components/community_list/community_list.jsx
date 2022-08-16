@@ -2,8 +2,8 @@ import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const Writing = ({ writing }) => {
-  const { title, userId, writeDt, hit, comment } = writing;
+const CommunityList = ({ list }) => {
+  const { title, userId, writeDt, hit, comment } = list;
 
   return (
     <View style={styles.container}>
@@ -30,11 +30,11 @@ const Writing = ({ writing }) => {
 const styles = StyleSheet.create({
   container: {
     borderColor: 'black',
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderRadius: 15,
-    marginTop: 20,
+    marginTop: 25,
     paddingHorizontal: 20,
-    paddingVertical: 5,
+    paddingVertical: 10,
     flexDirection: 'row',
   },
   title: {
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Writing;
+export default CommunityList;
