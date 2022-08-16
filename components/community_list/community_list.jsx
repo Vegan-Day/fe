@@ -15,7 +15,7 @@ const CommunityList = ({ list }) => {
           <Text style={styles.text}>조회 {hit}</Text>
         </View>
       </View>
-      <View style={styles.comment}>
+      <View style={styles.comments}>
         <MaterialCommunityIcons
           name='note-edit-outline'
           size={24}
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
-  comment: {
+  comments: {
     flex: 0.6,
     justifyContent: 'center',
     alignItems: 'flex-end',

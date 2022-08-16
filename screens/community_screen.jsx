@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -12,30 +12,56 @@ import CommunityList from '../components/community_list/community_list';
 import { EvilIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { URL } from '@env';
+import { useIsFocused } from '@react-navigation/native';
 
 const CommunityScreen = ({ navigation }) => {
   const [lists, setLists] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
-  // const Stack = createStackNavigator();
+  const isFocused = useIsFocused();
+  const listUpdate = async () => {
+    try {
+      const response = await axios.get(`${URL}/community`);
+      const data = response.data.data;
+      setLists(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // function StackNavigation() {
-  //   return (
-  //     <Stack.Navigator>
-  //       <Stack.Screen name='CommunityScreen' component={ComunityScreen} />
-  //       <Stack.Screen name='CommunityWrite' component={CommunityWrite} />
-  //     </Stack.Navigator>
-  //   );
-  // }
+  const onSelect = () => {
+    try {
+      axios //
+        .get(`${URL}/community?searchText=${searchText}`)
+        .then((response) => response.data.data)
+        .then((data) => {
+          setLists(data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    setSearchText('');
+    listUpdate();
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>전체글</Text>
-        <TextInput style={styles.input} placeholder='검색...' />
+        <TextInput
+          style={styles.input}
+          placeholder='검색...'
+          value={searchText}
+          onChangeText={(text) => setSearchText(text)}
+          onSubmitEditing={onSelect}
+        />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         {lists.map((list) => (
-          <CommunityList key={list.userId} list={list} />
+          <CommunityList key={list.bid} list={list} />
         ))}
       </ScrollView>
       <TouchableOpacity

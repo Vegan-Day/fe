@@ -40,7 +40,7 @@ const CommunityWrite = ({ navigation }) => {
         <TextInput
           name='title'
           style={styles.input}
-          maxLength={20}
+          maxLength={30}
           onChangeText={(e) => onChange('title', e)}
         ></TextInput>
       </View>
@@ -50,8 +50,8 @@ const CommunityWrite = ({ navigation }) => {
           name='content'
           style={styles.input}
           multiline={true}
-          maxLength={100}
-          numberOfLines={6}
+          maxLength={200}
+          numberOfLines={10}
           textAlignVertical='top'
           onChangeText={(e) => onChange('content', e)}
         />
