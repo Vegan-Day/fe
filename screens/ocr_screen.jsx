@@ -4,21 +4,18 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Platform,
+  Button,
 } from "react-native";
 import { Camera, CameraType } from "expo-camera";
-// import * as Permissions from "expo-permissions";
-import {
-  FontAwesome,
-  Ionicons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 function OcrScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(CameraType.back);
+  const [camera, setCamera] = useState(null);
+  const [Image, setImage] = useState(null);
 
+  //카메라 사용 허용 요청
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -26,37 +23,59 @@ function OcrScreen() {
     })();
   }, []);
 
+  //카메라 허용 안될 때 
   if (hasPermission === null) {
     return <View />;
   }
-
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
 
-  const takePicture = () => {
-    this.camera.takePictureAsync({ onPictureSaved: this.onPictureSaved });
+  //사진촬영 함수
+  const takePicture = async() => {
+    if (camera) {
+        const data = await camera.takePictureAsync(null);
+          setImage(data.url);
+      }
   };
 
-  const onPictureSaved = (photo) => {
-    console.log(photo);
+
+//갤러리에서 이미지 가져오기
+  const pickImage = async() => { 
+    let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes : ImagePicker.MediaTypeOptions.Images,
+            allowEditing : true,
+            aspect : [1,1],
+            quality : 1,
+        });
+        if (!result.cancelled) {
+          setImage(result.uri)
+          console.log(result.uri);
+        }
   };
+//이미지 업로드하기
+  const uplaodImage = async() => {
+    const uri = props.route.params.image
+    console.log(uri);
+  };
+
+  uplaodImage();
 
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} type={type} ratio="16:9">
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              setType(
-                type === CameraType.back ? CameraType.front : CameraType.back
-              );
-            }}
-          >
-            <Text style={styles.text}> Flip </Text>
-          </TouchableOpacity>
-        </View>
+      <Button title="Filp Image" opPress={()=>{
+	setType(
+    	type === Camera.Constants.Type.back
+        ? Camera.Constants.Type.front
+        : Camera.Constants.Type.back
+    )
+}} />
+      <Button title="Take picture" onPress={()=> takePicture()} />
+      <Button title="Picture Iamge From Gallery" onPress={()=> pickImage()} />
+      <Camera style={styles.camera} type={type}
+      ref={(ref)=> setCamera(ref)}
+       ratio="16:9">
+       
       </Camera>
     </View>
   );
