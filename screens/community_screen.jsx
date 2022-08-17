@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -19,15 +19,17 @@ const CommunityScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
 
   const isFocused = useIsFocused();
-  const listUpdate = async () => {
+
+  const listUpdate = useCallback(() => {
     try {
-      const response = await axios.get(`${URL}/community`);
-      const data = response.data.data;
-      setLists(data);
+      axios
+        .get(`${URL}/community`)
+        .then((response) => response.data.data)
+        .then((data) => setLists(data));
     } catch (error) {
       console.log(error);
     }
-  };
+  });
 
   const onSelect = () => {
     try {
@@ -43,7 +45,6 @@ const CommunityScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    setSearchText('');
     listUpdate();
   }, [isFocused]);
 
@@ -61,7 +62,13 @@ const CommunityScreen = ({ navigation }) => {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         {lists.map((list) => (
-          <CommunityList key={list.bid} list={list} />
+          <CommunityList
+            key={list.bid}
+            list={list}
+            navigation={() => {
+              navigation.navigate('CommunityDetail', { bid: list.bid });
+            }}
+          />
         ))}
       </ScrollView>
       <TouchableOpacity

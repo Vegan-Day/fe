@@ -1,29 +1,35 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const CommunityList = ({ list }) => {
+const CommunityList = ({ list, navigation }) => {
   const { title, userId, writeDt, hit, comment } = list;
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>{title}</Text>
-        <View style={styles.user}>
-          <Text style={styles.text}>{userId}</Text>
-          <Text style={styles.text}>{writeDt}</Text>
-          <Text style={styles.text}>조회 {hit}</Text>
+    <TouchableOpacity
+      onPress={() => {
+        navigation();
+      }}
+    >
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <Text style={styles.title}>{title}</Text>
+          <View style={styles.user}>
+            <Text style={styles.text}>{userId}</Text>
+            <Text style={styles.text}>{writeDt}</Text>
+            <Text style={styles.text}>조회 {hit}</Text>
+          </View>
+        </View>
+        <View style={styles.comments}>
+          <MaterialCommunityIcons
+            name='note-edit-outline'
+            size={24}
+            color='black'
+          />
+          <Text style={styles.text}>댓글 {comment}</Text>
         </View>
       </View>
-      <View style={styles.comments}>
-        <MaterialCommunityIcons
-          name='note-edit-outline'
-          size={24}
-          color='black'
-        />
-        <Text style={styles.text}>댓글 {comment}</Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

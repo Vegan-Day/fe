@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CommunityScreen from './screens/community_screen';
 import CommunityWrite from './screens/community_write';
 import Menu from './components/menu/menu';
+import CommunityDetail from './screens/community_detail';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,11 @@ const WholeStack = (props) => {
         name='CommunityWrite'
         component={CommunityWrite}
         options={{ title: '게시글 작성' }}
+      />
+      <Stack.Screen
+        name='CommunityDetail'
+        component={CommunityDetail}
+        options={{ title: '게시글' }}
       />
     </Stack.Navigator>
   );
