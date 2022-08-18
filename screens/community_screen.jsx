@@ -60,23 +60,25 @@ const CommunityScreen = ({ navigation }) => {
           onSubmitEditing={onSelect}
         />
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {lists.map((list) => (
-          <CommunityList
-            key={list.bid}
-            list={list}
-            navigation={() => {
-              navigation.navigate('CommunityDetail', { bid: list.bid });
-            }}
-          />
-        ))}
-      </ScrollView>
+      <View style={styles.scroll}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {lists.map((list) => (
+            <CommunityList
+              key={list.bid}
+              list={list}
+              navigation={() => {
+                navigation.navigate('CommunityDetail', { bid: list.bid });
+              }}
+            />
+          ))}
+        </ScrollView>
+      </View>
       <TouchableOpacity
         style={{
           backgroundColor: theme.mainColor,
           position: 'relative',
           left: 320,
-          bottom: 150,
+          bottom: 120,
           justifyContent: 'center',
           alignItems: 'center',
           borderRadius: 35,
@@ -98,6 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     paddingHorizontal: 20,
+    height: 80,
   },
   header: {
     flexDirection: 'row',
@@ -117,6 +120,9 @@ const styles = StyleSheet.create({
     width: 200,
     borderColor: 'black',
     borderWidth: 1,
+  },
+  scroll: {
+    maxHeight: '82%',
   },
 });
 

@@ -72,12 +72,13 @@ const Menu = (props) => {
         }}
       />
       <Tab.Screen
-        name='mall'
-        component={MallScreen}
+        name='community'
+        component={ComunityScreen}
         options={{
-          tabBarIcon: (props) => TabIcon({ ...props, name: 'shopping' }),
+          tabBarIcon: (props) => TabIcon({ ...props, name: 'chat' }),
         }}
       />
+
       <Tab.Screen
         name='ocr'
         component={OcrScreen}
@@ -89,10 +90,10 @@ const Menu = (props) => {
         }}
       />
       <Tab.Screen
-        name='community'
-        component={ComunityScreen}
+        name='mall'
+        component={MallScreen}
         options={{
-          tabBarIcon: (props) => TabIcon({ ...props, name: 'chat' }),
+          tabBarIcon: (props) => TabIcon({ ...props, name: 'shopping' }),
         }}
       />
       <Tab.Screen

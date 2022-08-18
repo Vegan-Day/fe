@@ -1,31 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import axios from 'axios';
-import { AntDesign } from '@expo/vector-icons';
-import { EvilIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { URL } from '@env';
+import moment from 'moment';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { theme } from '../../color';
 
 const CommunityDetailBoard = ({ board }) => {
   console.log(board);
   const { userId, title, writeDt, cn, hit, comment } = board[0];
 
-  const year = new Date(writeDt).toISOString().slice(0, 10);
-  const time = new Date(writeDt).toISOString().slice(11, 16);
+  const date = moment(writeDt).format('YYYY/MM/DD HH:mm');
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.user}>{userId}</Text>
-        <Text style={styles.date}>{year + ' ' + time}</Text>
+        <View style={styles.image}>
+          <MaterialCommunityIcons
+            name='leaf'
+            size={36}
+            color={theme.mainColor}
+          />
+        </View>
+        <View style={styles.userDate}>
+          <Text style={styles.user}>{userId}</Text>
+          <Text style={styles.date}>{date}</Text>
+        </View>
       </View>
       <View style={styles.content}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.cn}>{cn}</Text>
       </View>
       <View style={styles.footer}>
-        <AntDesign name='eyeo' size={24} color='black' />
+        <Ionicons name='eye-outline' size={24} color='grey' />
         <Text style={styles.hit}> {hit} </Text>
-        <EvilIcons name='comment' size={24} color='black' />
+        <Ionicons name='chatbox-outline' size={20} color='grey' />
         <Text style={styles.comment}> {comment} </Text>
       </View>
     </View>
@@ -37,14 +47,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   header: {
+    flexDirection: 'row',
     marginTop: 20,
   },
+  image: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'grey',
+    borderWidth: 0.5,
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+  userDate: {},
   user: {
     fontSize: 20,
     fontWeight: '500',
   },
   date: {
-    fontSize: 18,
     color: 'grey',
   },
   content: {
@@ -59,7 +79,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   footer: {
-    marginTop: 40,
+    marginTop: 20,
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomColor: 'grey',

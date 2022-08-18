@@ -7,7 +7,7 @@ import axios from 'axios';
 import { URL } from '@env';
 
 const CommunityWrite = ({ navigation }) => {
-  const [inputs, setInputs] = useState([]);
+  const [inputs, setInputs] = useState('');
 
   const onChange = (key, e) => {
     setInputs({
@@ -17,6 +17,10 @@ const CommunityWrite = ({ navigation }) => {
   };
 
   const onEnroll = () => {
+    if (inputs === '') {
+      Alert.alert('입력값 확인!');
+      return;
+    }
     axios
       .post(`${URL}/community`, {
         title: inputs['title'],
