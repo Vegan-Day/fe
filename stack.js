@@ -4,7 +4,8 @@ import CommunityScreen from './screens/community_screen';
 import CommunityWrite from './screens/community_write';
 import Menu from './components/menu/menu';
 import CommunityDetail from './screens/community_detail';
-
+import HomeScreen from './screens/home_screen';
+import MallScreen from './screens/mall_screen';
 const Stack = createStackNavigator();
 
 const WholeStack = (props) => {
@@ -15,7 +16,11 @@ const WholeStack = (props) => {
         component={Menu}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name='CommunityScreen' component={CommunityScreen} />
+      <Stack.Screen
+        name='CommunityScreen'
+        component={CommunityScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name='CommunityWrite'
         component={CommunityWrite}
@@ -25,6 +30,16 @@ const WholeStack = (props) => {
         name='CommunityDetail'
         component={CommunityDetail}
         options={{ title: '게시글' }}
+      />
+      <Stack.Screen
+        name='HomeScreen'
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='MallScreen'
+        component={MallScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

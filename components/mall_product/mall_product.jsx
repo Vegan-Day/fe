@@ -12,8 +12,6 @@ const MallProduct = ({ product }) => {
 
   const price = lprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-  const randomValue = Math.floor(Math.random() * 10 + 1);
-
   const naverLink = () => {
     Linking.openURL(link);
   };

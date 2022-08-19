@@ -61,7 +61,7 @@ const MallScreen = (props) => {
         </View>
       </View>
       <View style={styles.content}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {products.length === 0 ? (
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <ActivityIndicator color='black' size='large' />
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   main: {},
   content: {
-    maxHeight: '76%',
+    marginTop: 15,
   },
 });
 

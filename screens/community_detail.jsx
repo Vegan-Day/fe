@@ -55,7 +55,6 @@ const CommunityDetail = ({ route }) => {
         cm: text,
         userId: 'test',
       });
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }

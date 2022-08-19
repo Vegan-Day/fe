@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   scroll: {
-    maxHeight: '82%',
+    flex: 1,
   },
 });
 
