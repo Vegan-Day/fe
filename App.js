@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Header from "./components/header/header";
 import WholeStack from "./stack";
 import GoogleLogin from "./components/Login/GoogleLogin";
-import { useState } from "react";
+import {  useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function App() {
