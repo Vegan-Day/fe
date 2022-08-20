@@ -6,7 +6,7 @@ import {
   onPress,
   style,
 } from "deprecated-react-native-prop-types/DeprecatedTextPropTypes";
-
+import axios from "axios";
 
 function OcrScreen() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -50,7 +50,21 @@ function OcrScreen() {
       setImage(result.uri);
     }
   };
+
   console.log(image);
+
+  axios
+    .post(`http://101.101.219.80:8080/login?tokenId=${image}`, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      },
+    })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
   return (
     <View style={{ flex: 1 }}>
@@ -62,6 +76,8 @@ function OcrScreen() {
           ratio="1:2"
         ></Camera>
       </View>
+      <Button title="📸" onPress={() => takePicture()} />
+      <Button title="🖼️" onPress={() => pickImage()} />
       <Button
         title="Filp Image"
         onPress={() => {
@@ -70,12 +86,11 @@ function OcrScreen() {
               ? Camera.Constants.Type.front
               : Camera.Constants.Type.back
           );
-        }}/>
-      <Button title="📸" onPress={() => takePicture()} />
-      <Button title="🖼️" onPress={() => pickImage()} />
+        }}
+      />
       {image && <Image style={{ flex: 1 }} source={{ uri: image }} />}
     </View>
-    );
+  );
 }
 
 const styles = StyleSheet.create({

@@ -16,50 +16,34 @@ function GoogleLogin() {
     responseType: "id_token",
   });
 
-if (response?.params.id_token) {
-axios.post(`http://58.226.90.154:8080/login?tokenId=${response.params.id_token}`, {
-      headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-  }}).then(response => {console.log(response)})
-  .catch(error => {
-      console.log(error.response)
-  });
+  const saveLoggedIn = async (toSet) => {
+    await AsyncStorage.setItem("@veganDay",toSet);
+  }
+  if (response?.params.id_token) {
+    saveLoggedIn();
+    axios
+      .post(
+        `http://192.168.0.2/:8080/login?tokenId=${response.params.id_token}`,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
     console.log(response);
   }
-  
 
   useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
     }
   }, [response]);
-
-  // console.log(response);
-
-  //백엔드 요청
-  // console.log("왜 안돼",response?.params.id_token);
-  // onLogin;
-  // var xhr = new XMLHttpRequest();
-  // xhr.open('POST', '서버주소알려줄게있다가/tokensignin');
-  // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  // xhr.onload = function() {
-  //   console.log('Signed in as: ' + xhr.responseText);
-
-  // };
-  // response
-  //   ? () => {
-  //       var xhr = new XMLHttpRequest();
-  //       xhr.open("POST", "서버주소알려줄게있다가/tokensignin");
-  //       xhr.setRequestHeader(
-  //         "Content-Type",
-  //         "application/x-www-form-urlencoded"
-  //       );
-  //       xhr.onload = function () {
-  //         console.log("Signed in as: " + xhr.responseText);
-  //       };
-  //       xhr.send("idtoken=" + response.params.idToken);
-  //     }
-  //   : null;
 
   return (
     <View style={styles.container}>
@@ -69,7 +53,7 @@ axios.post(`http://58.226.90.154:8080/login?tokenId=${response.params.id_token}`
           response
             ? null
             : () => {
-                promptAsync()
+                promptAsync();
               }
         }
       >
