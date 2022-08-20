@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Button,
-} from "react-native";
+import { StyleSheet, Text, View, Button, Image } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
+import {
+  onPress,
+  style,
+} from "deprecated-react-native-prop-types/DeprecatedTextPropTypes";
+
 
 function OcrScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(CameraType.back);
   const [camera, setCamera] = useState(null);
-  const [Image, setImage] = useState(null);
+  const [image, setImage] = useState(null);
 
   //카메라 사용 허용 요청
   useEffect(() => {
@@ -23,7 +22,7 @@ function OcrScreen() {
     })();
   }, []);
 
-  //카메라 허용 안될 때 
+  //카메라 허용 안될 때
   if (hasPermission === null) {
     return <View />;
   }
@@ -32,71 +31,69 @@ function OcrScreen() {
   }
 
   //사진촬영 함수
-  const takePicture = async() => {
+  const takePicture = async () => {
     if (camera) {
-        const data = await camera.takePictureAsync(null);
-          setImage(data.url);
-      }
+      const data = await camera.takePictureAsync(null);
+      setImage(data.uri);
+    }
   };
 
-
-//갤러리에서 이미지 가져오기
-  const pickImage = async() => { 
+  //갤러리에서 이미지 가져오기
+  const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes : ImagePicker.MediaTypeOptions.Images,
-            allowEditing : true,
-            aspect : [1,1],
-            quality : 1,
-        });
-        if (!result.cancelled) {
-          setImage(result.uri)
-          console.log(result.uri);
-        }
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
   };
-//이미지 업로드하기
-  const uplaodImage = async() => {
-    const uri = props.route.params.image
-    console.log(uri);
-  };
-
-  uplaodImage();
+  console.log(image);
 
   return (
-    <View style={styles.container}>
-      <Button title="Filp Image" opPress={()=>{
-	setType(
-    	type === Camera.Constants.Type.back
-        ? Camera.Constants.Type.front
-        : Camera.Constants.Type.back
-    )
-}} />
-      <Button title="Take picture" onPress={()=> takePicture()} />
-      <Button title="Picture Iamge From Gallery" onPress={()=> pickImage()} />
-      <Camera style={styles.camera} type={type}
-      ref={(ref)=> setCamera(ref)}
-       ratio="16:9">
-       
-      </Camera>
+    <View style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Camera
+          style={styles.camera}
+          type={type}
+          ref={(ref) => setCamera(ref)}
+          ratio="1:2"
+        ></Camera>
+      </View>
+      <Button
+        title="Filp Image"
+        onPress={() => {
+          setType(
+            type === Camera.Constants.Type.back
+              ? Camera.Constants.Type.front
+              : Camera.Constants.Type.back
+          );
+        }}/>
+      <Button title="📸" onPress={() => takePicture()} />
+      <Button title="🖼️" onPress={() => pickImage()} />
+      {image && <Image style={{ flex: 1 }} source={{ uri: image }} />}
     </View>
-  );
+    );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "row",
+  },
+  fixedRatio: {
+    flex: 1,
+    aspectRatio: 1,
   },
   camera: {
     flex: 1,
   },
-  buttonContainer: {
-    flex: 1,
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    margin: 20,
-  },
   button: {
     flex: 0.1,
-    alignSelf: "flex-end",
+    backgroundColor: "transparent",
+    alignSelf: "flex-start",
     alignItems: "center",
   },
   text: {

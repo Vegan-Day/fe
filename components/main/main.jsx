@@ -3,9 +3,12 @@ import { Text, View, StyleSheet } from 'react-native';
 import Header from '../header/header';
 import Menubar from '../menubar/menubar';
 
-const Main = (props) => {
+const Main = (p) => {
+
+
   return (
     <>
+
       {/* <View style={styles.header}>
         <Header />
       </View> */}
