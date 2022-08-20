@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
-import { Alert, Button } from 'react-native';
+import {
+  Alert,
+  Button,
+  Image,
+  Pressable,
+  TouchableOpacity,
+} from 'react-native';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { onChange } from 'react-native-reanimated';
 import { theme } from '../color';
 import axios from 'axios';
 import { URL } from '@env';
+import * as ImagePicker from 'expo-image-picker';
+import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 const CommunityWrite = ({ navigation }) => {
   const [inputs, setInputs] = useState('');
+  const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
+  const [imageUrl, setImageUrl] = useState('');
 
   const onChange = (key, e) => {
     setInputs({
@@ -16,25 +27,43 @@ const CommunityWrite = ({ navigation }) => {
     });
   };
 
-  const onEnroll = () => {
+  const onEnroll = async () => {
     if (inputs === '') {
       Alert.alert('입력값 확인!');
       return;
     }
-    axios
-      .post(`${URL}/community`, {
-        title: inputs['title'],
-        cn: inputs['content'],
-        userId: 'test',
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+
+    const formData = new FormData();
+    const obj = {
+      title: inputs['title'],
+      cn: inputs['content'],
+      userId: 'test',
+    };
+
     setInputs('');
+    setImageUrl('');
     navigation.goBack();
+  };
+
+  const uploadImage = async (e) => {
+    if (!status?.granted) {
+      const permission = await requestPermission();
+      if (!permission.granted) {
+        return null;
+      }
+    }
+    // 이미지 업로드 기능
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      quality: 1,
+      aspect: [1, 1],
+    });
+
+    if (result.cancelled) {
+      return null;
+    }
+    setImageUrl(result.uri);
   };
 
   return (
@@ -59,6 +88,28 @@ const CommunityWrite = ({ navigation }) => {
           textAlignVertical='top'
           onChangeText={(e) => onChange('content', e)}
         />
+        <View style={styles.imageView}>
+          <Text style={styles.text}>사진첨부</Text>
+          <Text style={{ marginTop: 10, color: 'grey' }}>
+            관련 사진을 첨부해주세요. (1장)
+          </Text>
+          <View style={styles.imageInput}>
+            <TouchableOpacity style={styles.imageBtn} onPress={uploadImage}>
+              <FontAwesome name='plus' size={30} color='white' />
+            </TouchableOpacity>
+            <Pressable style={styles.imageBtn}>
+              {imageUrl.length === 0 ? (
+                <AntDesign name='picture' size={30} color='white' />
+              ) : (
+                <Image style={styles.image} source={{ uri: imageUrl }} />
+              )}
+            </Pressable>
+          </View>
+        </View>
+        {/* <Pressable onPress={uploadImage}>
+          <Text style={styles.text}>사진첨부</Text>
+          <Image style={styles.image} source={{ uri: imageUrl }} />
+        </Pressable> */}
       </View>
       <Button title='등록' color={theme.mainColor} onPress={onEnroll} />
     </View>
@@ -87,6 +138,24 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
+  },
+  imageBtn: {
+    width: 100,
+    height: 100,
+    backgroundColor: 'lightgrey',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  imageInput: {
+    flexDirection: 'row',
+    paddingVertical: 20,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
   },
 });
 export default CommunityWrite;
