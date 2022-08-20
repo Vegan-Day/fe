@@ -34,11 +34,28 @@ const CommunityWrite = ({ navigation }) => {
     }
 
     const formData = new FormData();
-    const obj = {
-      title: inputs['title'],
-      cn: inputs['content'],
-      userId: 'test',
-    };
+
+    const localUri = imageUrl;
+    const filename = localUri.split('/').pop();
+    const match = /\.(\w+)$/.exec(filename ?? '');
+    const type = match ? `image/${match[1]}` : `image`;
+
+    formData.append('title', inputs['title']);
+    formData.append('cn', inputs['content']);
+    formData.append('userId', 'test');
+
+    formData.append('file', { uri: localUri, name: filename, type });
+
+    console.log(formData);
+    try {
+      const response = axios.post(`${URL}/community`, formData, {
+        headers: { 'content-type': 'multipart/form-data' },
+        transformRequest: (formData) => formData,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error.response.data);
+    }
 
     setInputs('');
     setImageUrl('');

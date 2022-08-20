@@ -17,17 +17,13 @@ const CommunityList = ({ list, navigation }) => {
           <View style={styles.user}>
             <Text style={styles.text}>{userId}</Text>
             <Text style={styles.text}>{writeDt}</Text>
+          </View>
+          <View style={styles.user}>
             <Text style={styles.text}>조회 {hit}</Text>
+            <Text style={styles.text}>댓글 {comment}</Text>
           </View>
         </View>
-        <View style={styles.comments}>
-          <MaterialCommunityIcons
-            name='note-edit-outline'
-            size={24}
-            color='black'
-          />
-          <Text style={styles.text}>댓글 {comment}</Text>
-        </View>
+        <View style={styles.comments}></View>
       </View>
     </TouchableOpacity>
   );
@@ -50,18 +46,13 @@ const styles = StyleSheet.create({
   user: {
     marginTop: 10,
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   text: {
     color: 'grey',
+    marginRight: 20,
   },
   content: {
     flex: 1,
-  },
-  comments: {
-    flex: 0.6,
-    justifyContent: 'center',
-    alignItems: 'flex-end',
   },
 });
 
