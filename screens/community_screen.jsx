@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -12,38 +12,73 @@ import CommunityList from '../components/community_list/community_list';
 import { EvilIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { URL } from '@env';
+import { useIsFocused } from '@react-navigation/native';
 
 const CommunityScreen = ({ navigation }) => {
   const [lists, setLists] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
-  // const Stack = createStackNavigator();
+  const isFocused = useIsFocused();
 
-  // function StackNavigation() {
-  //   return (
-  //     <Stack.Navigator>
-  //       <Stack.Screen name='CommunityScreen' component={ComunityScreen} />
-  //       <Stack.Screen name='CommunityWrite' component={CommunityWrite} />
-  //     </Stack.Navigator>
-  //   );
-  // }
+  const listUpdate = useCallback(() => {
+    try {
+      axios
+        .get(`${URL}/community`)
+        .then((response) => response.data.data)
+        .then((data) => setLists(data));
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  const onSelect = () => {
+    try {
+      axios //
+        .get(`${URL}/community?searchText=${searchText}`)
+        .then((response) => response.data.data)
+        .then((data) => {
+          setLists(data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    listUpdate();
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>전체글</Text>
-        <TextInput style={styles.input} placeholder='검색...' />
+        <TextInput
+          style={styles.input}
+          placeholder='검색...'
+          value={searchText}
+          onChangeText={(text) => setSearchText(text)}
+          onSubmitEditing={onSelect}
+        />
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {lists.map((list) => (
-          <CommunityList key={list.userId} list={list} />
-        ))}
-      </ScrollView>
+      <View style={styles.scroll}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {lists.map((list) => (
+            <CommunityList
+              key={list.bid}
+              list={list}
+              navigation={() => {
+                navigation.navigate('CommunityDetail', { bid: list.bid });
+              }}
+            />
+          ))}
+        </ScrollView>
+      </View>
       <TouchableOpacity
         style={{
           backgroundColor: theme.mainColor,
           position: 'relative',
           left: 320,
-          bottom: 150,
+          bottom: 120,
           justifyContent: 'center',
           alignItems: 'center',
           borderRadius: 35,
@@ -65,6 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     paddingHorizontal: 20,
+    height: 80,
   },
   header: {
     flexDirection: 'row',
@@ -84,6 +120,9 @@ const styles = StyleSheet.create({
     width: 200,
     borderColor: 'black',
     borderWidth: 1,
+  },
+  scroll: {
+    flex: 1,
   },
 });
 

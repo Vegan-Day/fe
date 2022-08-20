@@ -7,7 +7,7 @@ import axios from 'axios';
 import { URL } from '@env';
 
 const CommunityWrite = ({ navigation }) => {
-  const [inputs, setInputs] = useState([]);
+  const [inputs, setInputs] = useState('');
 
   const onChange = (key, e) => {
     setInputs({
@@ -17,6 +17,10 @@ const CommunityWrite = ({ navigation }) => {
   };
 
   const onEnroll = () => {
+    if (inputs === '') {
+      Alert.alert('입력값 확인!');
+      return;
+    }
     axios
       .post(`${URL}/community`, {
         title: inputs['title'],
@@ -40,7 +44,7 @@ const CommunityWrite = ({ navigation }) => {
         <TextInput
           name='title'
           style={styles.input}
-          maxLength={20}
+          maxLength={30}
           onChangeText={(e) => onChange('title', e)}
         ></TextInput>
       </View>
@@ -50,8 +54,8 @@ const CommunityWrite = ({ navigation }) => {
           name='content'
           style={styles.input}
           multiline={true}
-          maxLength={100}
-          numberOfLines={6}
+          maxLength={200}
+          numberOfLines={10}
           textAlignVertical='top'
           onChangeText={(e) => onChange('content', e)}
         />

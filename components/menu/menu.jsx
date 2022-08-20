@@ -52,12 +52,8 @@ const Menu = (props) => {
         headerShown: false,
         tabBarStyle: {
           position: 'absolute',
-          bottom: 25,
-          left: 20,
-          right: 20,
           elevation: 0,
           backgroundColor: '#ffffff',
-          borderRadius: 15,
           height: 70,
           ...styles.shadow,
         },
@@ -72,12 +68,13 @@ const Menu = (props) => {
         }}
       />
       <Tab.Screen
-        name='mall'
-        component={MallScreen}
+        name='community'
+        component={ComunityScreen}
         options={{
-          tabBarIcon: (props) => TabIcon({ ...props, name: 'shopping' }),
+          tabBarIcon: (props) => TabIcon({ ...props, name: 'chat' }),
         }}
       />
+
       <Tab.Screen
         name='ocr'
         component={OcrScreen}
@@ -89,10 +86,10 @@ const Menu = (props) => {
         }}
       />
       <Tab.Screen
-        name='community'
-        component={ComunityScreen}
+        name='mall'
+        component={MallScreen}
         options={{
-          tabBarIcon: (props) => TabIcon({ ...props, name: 'chat' }),
+          tabBarIcon: (props) => TabIcon({ ...props, name: 'shopping' }),
         }}
       />
       <Tab.Screen
