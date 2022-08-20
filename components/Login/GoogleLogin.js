@@ -17,8 +17,8 @@ function GoogleLogin() {
   });
 
   const saveLoggedIn = async (toSet) => {
-    await AsyncStorage.setItem("@veganDay",toSet);
-  }
+    await AsyncStorage.setItem("@veganDay", toSet);
+  };
   if (response?.params.id_token) {
     saveLoggedIn();
     axios
@@ -57,6 +57,11 @@ function GoogleLogin() {
               }
         }
       >
+        <Image
+         style
+          alt="Google sign-in"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+        />
         <Text> {response ? "로그인 성공" : "구글로 로그인하기"}</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
@@ -70,6 +75,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  googleImage: {
+    width:"20px",
+    marginTop:"7px", 
+    marginRight:"8px"
   },
 });
 

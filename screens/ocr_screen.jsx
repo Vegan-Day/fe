@@ -35,6 +35,8 @@ function OcrScreen() {
     if (camera) {
       const data = await camera.takePictureAsync(null);
       setImage(data.uri);
+      onEnroll();
+
     }
   };
 
@@ -51,20 +53,23 @@ function OcrScreen() {
     }
   };
 
-  console.log(image);
-
-  axios
-    .post(`http://101.101.219.80:8080/login?tokenId=${image}`, {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-      },
-    })
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  const onEnroll = async () => {
+    const formData = new FormData();
+    const localUri = image;
+    const filename = localUri.split("/").pop();
+    const match = /\.(\w+)$/.exec(filename ?? '');
+    const type = match ? `image / ${match[1]}` : `image`;
+   formData.append("file", { uri: localUri, name: filename, type });
+    try {
+      const response =  axios.post("http://101.101.219.80:8080/ocr", formData, {
+        headers: { "content-type": "multipart/form-data" },
+        transformRequest: (formData) => formData,
+      });
+      console.log("답신",response);
+    } catch (error) {
+      console.log("오류났음",error.response.data);
+    }
+  };
 
   return (
     <View style={{ flex: 1 }}>
