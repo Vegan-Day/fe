@@ -6,6 +6,7 @@ import Menu from './components/menu/menu';
 import CommunityDetail from './screens/community_detail';
 import HomeScreen from './screens/home_screen';
 import MallScreen from './screens/mall_screen';
+import VeganNewsScreen from './screens/vegan_news_screen';
 const Stack = createStackNavigator();
 
 const WholeStack = (props) => {
@@ -40,6 +41,11 @@ const WholeStack = (props) => {
         name='MallScreen'
         component={MallScreen}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='VeganNewsScreen'
+        component={VeganNewsScreen}
+        options={{ title: '비건 소식' }}
       />
     </Stack.Navigator>
   );

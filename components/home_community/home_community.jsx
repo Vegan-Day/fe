@@ -1,12 +1,19 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const HomeCommunity = ({ best }) => {
-  const { title } = best;
+const HomeCommunity = ({ best, navigation }) => {
+  const { title, bid } = best;
+
+  const onCommunityGo = () => {
+    navigation();
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{title}</Text>
+      <TouchableOpacity onPress={onCommunityGo}>
+        <Text style={styles.text}>{title}</Text>
+      </TouchableOpacity>
     </View>
   );
 };

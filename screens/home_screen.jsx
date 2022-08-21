@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import { theme } from '../color';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -25,6 +26,10 @@ const HomeScreen = ({ navigation }) => {
     }
   };
 
+  const onNews = () => {
+    navigation.navigate('VeganNewsScreen');
+  };
+
   useEffect(() => {
     onBest();
   }, []);
@@ -32,31 +37,13 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate('CommunityScreen');
-          }}
-        >
-          <MaterialCommunityIcons name='chat-outline' size={20} color='white' />
-          <Text style={styles.text}>비건 커뮤니티</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate('MallScreen');
-          }}
-        >
-          <MaterialCommunityIcons
-            name='shopping-outline'
-            size={20}
-            color='white'
+        <TouchableOpacity onPress={onNews}>
+          <Image
+            style={styles.image}
+            source={{
+              uri: 'http://101.101.219.80:8080/image/news/banner-202208.png',
+            }}
           />
-          <Text style={styles.text}>비건 쇼핑</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <MaterialCommunityIcons name='map' size={20} color='white' />
-          <Text style={styles.text}>비건 지도</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.main}>
@@ -83,7 +70,13 @@ const HomeScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             {bests.map((best) => (
-              <HomeCommunity key={best.bid} best={best} />
+              <HomeCommunity
+                key={best.bid}
+                best={best}
+                navigation={() => {
+                  navigation.navigate('CommunityDetail', { bid: best.bid });
+                }}
+              />
             ))}
           </View>
         )}
@@ -96,11 +89,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    paddingHorizontal: 20,
+    paddingHorizontal: 25,
   },
   header: {
     marginTop: 40,
-    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     fontSize: 18,
@@ -118,7 +112,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 30,
     paddingVertical: 10,
-    marginTop: 80,
+    marginTop: 40,
     borderColor: 'grey',
     borderWidth: 0.5,
     borderRadius: 10,
@@ -138,6 +132,11 @@ const styles = StyleSheet.create({
   communityText: {
     fontSize: 18,
     color: theme.mainColor,
+  },
+  image: {
+    width: 360,
+    height: 200,
+    borderRadius: 10,
   },
 });
 
