@@ -27,7 +27,7 @@ const CommunityWrite = ({ navigation }) => {
     });
   };
 
-  const onEnroll = async () => {
+  const onEnroll = () => {
     if (inputs === '') {
       Alert.alert('입력값 확인!');
       return;
@@ -46,7 +46,6 @@ const CommunityWrite = ({ navigation }) => {
 
     formData.append('file', { uri: localUri, name: filename, type });
 
-    console.log(formData);
     try {
       const response = axios.post(`${URL}/community`, formData, {
         headers: { 'content-type': 'multipart/form-data' },
@@ -56,7 +55,6 @@ const CommunityWrite = ({ navigation }) => {
     } catch (error) {
       console.log(error.response.data);
     }
-
     setInputs('');
     setImageUrl('');
     navigation.goBack();

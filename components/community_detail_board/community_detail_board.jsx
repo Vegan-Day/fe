@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ActivityIndicator,
+  Image,
+  useWindowDimensions,
+} from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import { URL } from '@env';
 import moment from 'moment';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { theme } from '../../color';
+import AutoHeightImage from 'react-native-auto-height-image';
 
 const CommunityDetailBoard = ({ board }) => {
   console.log(board);
-  const { userId, title, writeDt, cn, hit, comment } = board[0];
+  const { userId, title, writeDt, cn, hit, comment, attachfile } = board[0];
 
   const date = moment(writeDt).format('YYYY/MM/DD HH:mm');
-
+  const imagePath = attachfile === null ? null : attachfile['filepath'];
+  const { width } = useWindowDimensions();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.image}>
+        <View style={styles.icon}>
           <MaterialCommunityIcons
             name='leaf'
             size={36}
@@ -31,6 +40,14 @@ const CommunityDetailBoard = ({ board }) => {
       <View style={styles.content}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.cn}>{cn}</Text>
+        <View style={styles.contentImage}>
+          <AutoHeightImage
+            width={250}
+            source={{
+              uri: `${imagePath}`,
+            }}
+          />
+        </View>
       </View>
       <View style={styles.footer}>
         <Ionicons name='eye-outline' size={24} color='grey' />
@@ -50,7 +67,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 20,
   },
-  image: {
+  icon: {
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: 'grey',
@@ -87,6 +104,15 @@ const styles = StyleSheet.create({
   },
   hit: {
     marginRight: 20,
+  },
+  contentImage: {
+    padding: 0,
+    marginTop: 20,
+  },
+  image: {
+    resizeMode: 'stretch',
+    width: '100%',
+    height: '100%',
   },
 });
 export default CommunityDetailBoard;

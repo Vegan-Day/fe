@@ -12,7 +12,7 @@ const Header = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 20,
   },
   text: {
     fontSize: 40,

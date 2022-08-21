@@ -88,12 +88,14 @@ const CommunityDetail = ({ route }) => {
         </View>
       ) : (
         <View style={styles.main}>
-          <CommunityDetailBoard board={board} />
-          <ScrollView>
-            {comments.map((comment) => (
-              <CommunityDetailComment key={comment.cid} comment={comment} />
-            ))}
-          </ScrollView>
+          <View style={styles.board}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <CommunityDetailBoard board={board} />
+              {comments.map((comment) => (
+                <CommunityDetailComment key={comment.cid} comment={comment} />
+              ))}
+            </ScrollView>
+          </View>
         </View>
       )}
       <View style={styles.footer}>
@@ -120,6 +122,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+
   main: {
     maxHeight: '85%',
   },
@@ -142,6 +145,10 @@ const styles = StyleSheet.create({
   },
   send: {
     paddingHorizontal: 10,
+  },
+  board: {
+    width: '100%',
+    height: 600,
   },
 });
 export default CommunityDetail;
