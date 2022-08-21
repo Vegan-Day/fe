@@ -21,7 +21,7 @@ const CommunityDetailBoard = ({ board }) => {
 
   const date = moment(writeDt).format('YYYY/MM/DD HH:mm');
   const imagePath = attachfile === null ? null : attachfile['filepath'];
-  const { width } = useWindowDimensions();
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -108,11 +108,6 @@ const styles = StyleSheet.create({
   contentImage: {
     padding: 0,
     marginTop: 20,
-  },
-  image: {
-    resizeMode: 'stretch',
-    width: '100%',
-    height: '100%',
   },
 });
 export default CommunityDetailBoard;
