@@ -1,23 +1,23 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useEffect } from "react";
-import * as WebBrowser from "expo-web-browser";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
-import * as Google from "expo-auth-session/providers/google";
-import axios from "axios";
+import { StatusBar } from 'expo-status-bar';
+import React, { useEffect } from 'react';
+import * as WebBrowser from 'expo-web-browser';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import * as Google from 'expo-auth-session/providers/google';
+import axios from 'axios';
 
 WebBrowser.maybeCompleteAuthSession(); //팝업무시
 function GoogleLogin() {
   //구글로 로그인하는 함수
   const [request, response, promptAsync] = Google.useAuthRequest({
     iosClientId:
-      "903572796053-ulgfpn2bnmd6kee8p18kevde4g6og0q8.apps.googleusercontent.com",
+      '903572796053-ulgfpn2bnmd6kee8p18kevde4g6og0q8.apps.googleusercontent.com',
     expoClientId:
-      "903572796053-1h25l5pim005lmje1htgg9g6t7fluscb.apps.googleusercontent.com",
-    responseType: "id_token",
+      '903572796053-1h25l5pim005lmje1htgg9g6t7fluscb.apps.googleusercontent.com',
+    responseType: 'id_token',
   });
 
   const saveLoggedIn = async (toSet) => {
-    await AsyncStorage.setItem("@veganDay", toSet);
+    await AsyncStorage.setItem('@veganDay', toSet);
   };
   if (response?.params.id_token) {
     saveLoggedIn();
@@ -26,7 +26,7 @@ function GoogleLogin() {
         `http://192.168.0.2/:8080/login?tokenId=${response.params.id_token}`,
         {
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
           },
         }
       )
@@ -40,7 +40,7 @@ function GoogleLogin() {
   }
 
   useEffect(() => {
-    if (response?.type === "success") {
+    if (response?.type === 'success') {
       const { authentication } = response;
     }
   }, [response]);
@@ -58,13 +58,14 @@ function GoogleLogin() {
         }
       >
         <Image
-         style
-          alt="Google sign-in"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+          alt='Google sign-in'
+          source={{
+            uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png',
+          }}
         />
-        <Text> {response ? "로그인 성공" : "구글로 로그인하기"}</Text>
+        <Text> {response ? '로그인 성공' : '구글로 로그인하기'}</Text>
       </TouchableOpacity>
-      <StatusBar style="auto" />
+      <StatusBar style='auto' />
     </View>
   );
 }
@@ -72,14 +73,14 @@ function GoogleLogin() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   googleImage: {
-    width:"20px",
-    marginTop:"7px", 
-    marginRight:"8px"
+    width: '20px',
+    marginTop: '7px',
+    marginRight: '8px',
   },
 });
 
