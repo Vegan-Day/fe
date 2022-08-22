@@ -17,7 +17,7 @@ import AutoHeightImage from 'react-native-auto-height-image';
 
 const CommunityDetailBoard = ({ board }) => {
   console.log(board);
-  const { userId, title, writeDt, cn, hit, comment, attachfile } = board[0];
+  const { userName, title, writeDt, cn, hit, comment, attachfile } = board[0];
 
   const date = moment(writeDt).format('YYYY/MM/DD HH:mm');
   const imagePath = attachfile === null ? null : attachfile['filepath'];
@@ -33,7 +33,7 @@ const CommunityDetailBoard = ({ board }) => {
           />
         </View>
         <View style={styles.userDate}>
-          <Text style={styles.user}>{userId}</Text>
+          <Text style={styles.user}>{userName}</Text>
           <Text style={styles.date}>{date}</Text>
         </View>
       </View>

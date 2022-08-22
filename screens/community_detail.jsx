@@ -24,7 +24,7 @@ const CommunityDetail = ({ route }) => {
     writeDt: new Date(),
     cid: Date.now(),
     cm: text,
-    userId: 'test',
+    userName: 'test',
   };
 
   const bid = route.params.bid;
@@ -53,7 +53,7 @@ const CommunityDetail = ({ route }) => {
       const response = await axios.post(`${URL}/community/comment`, {
         bid: bid,
         cm: text,
-        userId: 'test',
+        userName: 'test',
       });
     } catch (error) {
       console.log(error);

@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const CommunityList = ({ list, navigation }) => {
-  const { title, userId, writeDt, hit, comment, imagePath } = list;
+  const { title, userName, writeDt, hit, comment, imagePath } = list;
   return (
     <TouchableOpacity
       onPress={() => {
@@ -14,7 +14,7 @@ const CommunityList = ({ list, navigation }) => {
         <View style={styles.content}>
           <Text style={styles.title}>{title}</Text>
           <View style={styles.user}>
-            <Text style={styles.text}>{userId}</Text>
+            <Text style={styles.text}>{userName}</Text>
             <Text style={styles.text}>{writeDt}</Text>
           </View>
           <View style={styles.user}>

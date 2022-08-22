@@ -27,7 +27,7 @@ const CommunityWrite = ({ navigation }) => {
     });
   };
 
-  const onEnroll = () => {
+  const onEnroll = async () => {
     if (inputs === '') {
       Alert.alert('입력값 확인!');
       return;
@@ -35,29 +35,35 @@ const CommunityWrite = ({ navigation }) => {
 
     const formData = new FormData();
 
-    const localUri = imageUrl;
-    const filename = localUri.split('/').pop();
-    const match = /\.(\w+)$/.exec(filename ?? '');
-    const type = match ? `image/${match[1]}` : `image`;
+    if (imageUrl !== '') {
+      const localUri = imageUrl;
+      const filename = localUri.split('/').pop();
+      const match = /\.(\w+)$/.exec(filename ?? '');
+      const type = match ? `image/${match[1]}` : `image`;
 
+      formData.append('file', { uri: localUri, name: filename, type });
+    }
     formData.append('title', inputs['title']);
-    formData.append('cn', inputs['content']);
-    formData.append('userId', 'test');
-
-    formData.append('file', { uri: localUri, name: filename, type });
+    formData.append('cn', inputs['content'] || '');
+    formData.append('userName', 'test');
 
     try {
-      const response = axios.post(`${URL}/community`, formData, {
+      const response = await axios.post(`${URL}/community`, formData, {
         headers: { 'content-type': 'multipart/form-data' },
         transformRequest: (formData) => formData,
       });
-      console.log(response);
+      const data = response.data;
+
+      if (data.statusCode === 400) {
+        Alert.alert('내용을 입력해 주세요!');
+      } else {
+        setInputs('');
+        setImageUrl('');
+        navigation.goBack();
+      }
     } catch (error) {
       console.log(error.response.data);
     }
-    setInputs('');
-    setImageUrl('');
-    navigation.goBack();
   };
 
   const uploadImage = async (e) => {
