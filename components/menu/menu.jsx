@@ -8,7 +8,6 @@ import OcrScreen from '../ocr/ocr_screen';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { theme } from '../../color';
-
 const Tab = createBottomTabNavigator();
 const TabIcon = ({ name, color }) => {
   return (

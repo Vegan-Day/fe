@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  ScrollView,
 } from 'react-native';
 import { theme } from '../color';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -36,51 +37,59 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={onNews}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: 'http://101.101.219.80:8080/image/news/banner-202208.png',
-            }}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.main}>
-        {bests.length === 0 ? (
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator color='black' size='large' />
-          </View>
-        ) : (
-          <View style={styles.content}>
-            <View style={styles.contentHead}>
-              <Text style={styles.trend}>인기글</Text>
-              <TouchableOpacity
-                style={styles.community}
-                onPress={() => {
-                  navigation.navigate('CommunityScreen');
-                }}
-              >
-                <Text style={styles.communityText}>더보기</Text>
-                <MaterialCommunityIcons
-                  name='chevron-right'
-                  size={24}
-                  color={theme.mainColor}
-                />
-              </TouchableOpacity>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={onNews}>
+            <Image
+              style={styles.image}
+              source={{
+                uri: `${URL}/image/news/banner-202208.png`,
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.main}>
+          {bests.length === 0 ? (
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <ActivityIndicator color='black' size='large' />
             </View>
-            {bests.map((best) => (
-              <HomeCommunity
-                key={best.bid}
-                best={best}
-                navigation={() => {
-                  navigation.navigate('CommunityDetail', { bid: best.bid });
-                }}
-              />
-            ))}
+          ) : (
+            <View style={styles.content}>
+              <View style={styles.contentHead}>
+                <Text style={styles.trend}>인기글</Text>
+                <TouchableOpacity
+                  style={styles.community}
+                  onPress={() => {
+                    navigation.navigate('CommunityScreen');
+                  }}
+                >
+                  <Text style={styles.communityText}>더보기</Text>
+                  <MaterialCommunityIcons
+                    name='chevron-right'
+                    size={24}
+                    color={theme.mainColor}
+                  />
+                </TouchableOpacity>
+              </View>
+              {bests.map((best) => (
+                <HomeCommunity
+                  key={best.bid}
+                  best={best}
+                  navigation={() => {
+                    navigation.navigate('CommunityDetail', { bid: best.bid });
+                  }}
+                />
+              ))}
+            </View>
+          )}
+          <View style={styles.usingMethod}>
+            <Image
+              style={styles.usingMethodImage}
+              source={{ uri: `${URL}/image/news/ocr.png` }}
+            />
           </View>
-        )}
-      </View>
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -90,9 +99,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     paddingHorizontal: 25,
+    paddingBottom: 100,
   },
   header: {
-    marginTop: 40,
+    marginTop: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -112,7 +122,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 30,
     paddingVertical: 10,
-    marginTop: 40,
+    marginTop: 20,
     borderColor: 'grey',
     borderWidth: 0.5,
     borderRadius: 10,
@@ -136,6 +146,17 @@ const styles = StyleSheet.create({
   image: {
     width: 360,
     height: 200,
+    borderRadius: 10,
+  },
+  usingMethod: {
+    marginTop: 20,
+    borderColor: theme.mainColor,
+    borderWidth: 0.5,
+    borderRadius: 10,
+  },
+  usingMethodImage: {
+    width: 360,
+    height: 500,
     borderRadius: 10,
   },
 });

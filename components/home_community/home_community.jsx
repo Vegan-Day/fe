@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 const HomeCommunity = ({ best, navigation }) => {
-  const { title, bid } = best;
+  const { title } = best;
 
   const onCommunityGo = () => {
     navigation();
