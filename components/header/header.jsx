@@ -41,9 +41,6 @@ const Header = ({ navigation }) => {
           source={require('../../assets/logo.png')}
         />
       </View>
-      <TouchableOpacity onPress={logout}>
-        <Ionicons name='person' size={30} color={theme.mainColor} />
-      </TouchableOpacity>
     </View>
   );
 };

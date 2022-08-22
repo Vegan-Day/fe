@@ -13,9 +13,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import axios, { Axios } from 'axios';
 import { URL } from '@env';
 import HomeCommunity from '../components/home_community/home_community';
+import AutoHeightImage from 'react-native-auto-height-image';
 
 const HomeScreen = ({ navigation }) => {
   const [bests, setBests] = useState([]);
+  const [isUser, setIsUser] = useState(null);
 
   const onBest = async () => {
     try {
@@ -39,6 +41,15 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
+          <View style={styles.login}>
+            {/* <Text style={styles.isLogin}>
+              이성호님, {'\n'}오늘도 즐거운 비건 되세요.
+            </Text> */}
+            <AutoHeightImage
+              width={360}
+              source={{ uri: `${URL}/image/login.png` }}
+            />
+          </View>
           <TouchableOpacity onPress={onNews}>
             <Image
               style={styles.image}
@@ -89,6 +100,11 @@ const HomeScreen = ({ navigation }) => {
             />
           </View>
         </View>
+        <View style={styles.logout}>
+          <TouchableOpacity>
+            <Text style={styles.logoutText}>로그아웃</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );
@@ -103,8 +119,6 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   text: {
     fontSize: 18,
@@ -158,6 +172,20 @@ const styles = StyleSheet.create({
     width: 360,
     height: 500,
     borderRadius: 10,
+  },
+  login: {
+    marginBottom: 20,
+  },
+  isLogin: {
+    fontSize: 20,
+  },
+  logout: {
+    marginTop: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logoutText: {
+    fontSize: 20,
   },
 });
 
