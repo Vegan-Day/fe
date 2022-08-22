@@ -4,7 +4,7 @@ import HomeScreen from '../../screens/home_screen';
 import MapScreen from '../../screens/map_screens';
 import ComunityScreen from '../../screens/community_screen';
 import MallScreen from '../../screens/mall_screen';
-import OcrScreen from '../../screens/ocr_screen';
+import OcrScreen from '../ocr/ocr_screen';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { theme } from '../../color';
