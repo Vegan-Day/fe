@@ -113,7 +113,7 @@ function OcrScreen({ navigation }) {
       </View>
       <Button title="📸" onPress={() => takePicture()} />
       <Button title="🖼️" onPress={() => pickImage()} />
-      {img && <Image style={{ flex: 1 }} source={{ uri: img }} />}
+      <Image style={{ flex: 1 }} source={{ uri: img }} />
     </View>
   );
 }
