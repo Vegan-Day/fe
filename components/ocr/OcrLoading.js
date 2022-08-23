@@ -1,38 +1,41 @@
-// import { StyleSheet, Text, View, Button, Image } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 
-// function OcrLoading() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>로딩중</Text>
-//     </View>
-//   );
-// };
+function OcrLoading({ navigation }, route) {
+  const path = require("./SpinnerGrin.gif");
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: "flex-end",
-//     alignItems: "center",
-//     justifyContent: "center",
-
-//   },
-//   fixedRatio: {
-//     flex: 1,
-//     aspectRatio: 1,
-//   },
-//   camera: {
-//     flex: 1,
-//   },
-//   button: {
-//     flex: 0.1,
-//     backgroundColor: "transparent",
-//     alignSelf: "flex-start",
-//     alignItems: "center",
-//   },
-//   text: {
-//     fontSize: 18,
-//     color: "white",
-//   },
-// });
-
-// export default OcrLoading;
+  return (
+    <View style={styles.container}>
+        <Text style={styles.text}>이미지를 분석중입니다</Text>
+        <Text style={styles.text}></Text>
+        <Image style={styles.image} source={path}></Image>
+    </View>
+  );
+}
+const styles = StyleSheet.create({
+    container: {
+      position: "absolute",
+      alignSelf: "stretch",
+      zIndex: 999,
+      display: "absolute",
+      flexDirection: "column",
+      alignSelf: "center",
+      justifyContent: "center",
+      backgroundColor: "white",
+      textAlign: "center",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+    },
+    text: {
+      marginTop: 30,
+      marginBottom: 10,
+      fontSize: 20,
+      alignSelf: "center",
+    },
+    image: {
+      alignSelf: "center",
+    },
+  });
+  
+  export default OcrLoading;

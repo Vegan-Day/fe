@@ -4,27 +4,33 @@ import WholeStack from './stack';
 import GoogleLogin from './components/Login/GoogleLogin';
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from "react";
+
+let logincheck = false;
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const getLoggin = async () => {
-    const logginData = await AsyncStorage.getItem(
-      '@veganDay',
-      JSON.stringify(logginData)
-    );
-    setIsLoggedIn(true);
+  useEffect(() => {
+    getData();
+  }, [logincheck]);
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@storage_Key");
+      if (value !== null) {
+        logincheck = true;
+      }
+    } catch (e) {
+      // error reading value
+    }
   };
-  getLoggin();
-
   return (
     <>
-      {isLoggedIn ? (
+      {logincheck ? (
+        <GoogleLogin />
+      ) : (
         <NavigationContainer>
           <Header />
           <WholeStack />
         </NavigationContainer>
-      ) : (
-        <GoogleLogin />
       )}
     </>
   );
