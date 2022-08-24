@@ -1,17 +1,26 @@
 import { StyleSheet, Text, View, Image } from "react-native";
+import { theme } from "../../color";
 
-function OcrLoading({ navigation }, route) {
+function OcrLoading(props) {
   const path = require("./SpinnerGrin.gif");
+  const img = props.img;
 
   return (
     <View style={styles.container}>
+      <Image style={styles.infoimg} source={{ uri: img }}></Image> 
         <Text style={styles.text}>이미지를 분석중입니다</Text>
-        <Text style={styles.text}></Text>
-        <Image style={styles.image} source={path}></Image>
+        <Image style={styles.spinner} source={path}></Image>
     </View>
   );
 }
 const styles = StyleSheet.create({
+  infoimg :{
+    flex:1,
+    margin: 50,
+    borderRadius:50,
+    borderColor: theme.mainColor,
+    borderWidth:5
+  },
     container: {
       position: "absolute",
       alignSelf: "stretch",
@@ -28,12 +37,12 @@ const styles = StyleSheet.create({
       right: 0,
     },
     text: {
-      marginTop: 30,
-      marginBottom: 10,
       fontSize: 20,
       alignSelf: "center",
+      fontWeight: "bold",
+      color: theme.mainColor
     },
-    image: {
+    spinner: {
       alignSelf: "center",
     },
   });

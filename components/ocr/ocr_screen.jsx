@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Button, Image, Alert } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
+import { AntDesign } from "@expo/vector-icons";
 import {
   onPress,
   style,
 } from "deprecated-react-native-prop-types/DeprecatedTextPropTypes";
 import axios from "axios";
 import OcrLoading from "./OcrLoading";
+import { theme } from "../../color";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { FontAwesome } from "@expo/vector-icons";
 
 let img = null;
 let foodinfo = "";
@@ -18,7 +22,7 @@ function OcrScreen({ navigation }) {
   const [type, setType] = useState(CameraType.back);
   const [camera, setCamera] = useState(null);
   const [loading, setLoading] = useState(false);
-  
+
   //카메라 사용 허용 요청
   useEffect(() => {
     (async () => {
@@ -82,12 +86,12 @@ function OcrScreen({ navigation }) {
         .post(`http://101.101.219.80:8080/classify`, info)
         .then((response) => {
           notvegan = response.data.data;
-          message(); 
+          message();
         })
         .catch((error) => {
           console.log(error);
         });
-          //info가 null일 경우, setLoding(false), 값이 있을 경우 setLoding(true)
+      //info가 null일 경우, setLoding(false), 값이 있을 경우 setLoding(true)
       setLoading(false);
     } catch (error) {
       console.log("오류", error);
@@ -96,14 +100,21 @@ function OcrScreen({ navigation }) {
 
   const message = () => {
     notvegan
-      ? Alert.alert("알림", `${notvegan} 등 동물성 성분이 포함되어있습니다.`, [{ text: "확인" }])
+      ? Alert.alert("알림", `${notvegan} 등 동물성 성분이 포함되어있습니다.`, [
+          { text: "확인" },
+        ])
       : Alert.alert("알림", `비건식품입니다.`, [{ text: "확인" }]);
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+      
+      {loading ? (
+        <>
+          <OcrLoading img={img}/>
+        </>
+      ) : null}
       <View style={styles.container}>
-        {loading ? <OcrLoading /> : null}
         <Camera
           style={styles.camera}
           type={type}
@@ -111,33 +122,38 @@ function OcrScreen({ navigation }) {
           ratio="1:2"
         ></Camera>
       </View>
-      <Button title="📸" onPress={() => takePicture()} />
-      <Button title="🖼️" onPress={() => pickImage()} />
-      <Image style={{ flex: 1 }} source={{ uri: img }} />
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => takePicture()}>
+          <AntDesign name="camera" size={40} color={theme.mainColor} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => pickImage()}>
+          <FontAwesome name="photo" size={40} color={theme.mainColor} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 3.8,
     flexDirection: "row",
-  },
-  fixedRatio: {
-    flex: 1,
-    aspectRatio: 1,
+    backgroundColor: "white",
   },
   camera: {
     flex: 1,
+    marginBottom: 30,
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 30,
   },
-  button: {
-    flex: 0.1,
-    backgroundColor: "transparent",
-    alignSelf: "flex-start",
-    alignItems: "center",
+  buttonContainer: {
+    flex: 0.7,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    backgroundColor: "white",
   },
-  text: {
-    fontSize: 18,
-    color: "white",
+  scrollimage: {
+    flex: 5,
   },
 });
 export default OcrScreen;
