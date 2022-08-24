@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button, Image, Alert } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import { AntDesign } from "@expo/vector-icons";
+import { URL } from '@env';
+
 import {
   onPress,
   style,
@@ -69,7 +71,7 @@ function OcrScreen({ navigation }) {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://101.101.219.80:8080/ocr",
+        `${URL}/ocr`,
         formData,
         {
           headers: { "content-type": "multipart/form-data" },
@@ -83,7 +85,7 @@ function OcrScreen({ navigation }) {
       info = info.split(/,|\(|\)|\{|\}|\[|\]|\/|0|1|2|3|4|5|6|7|8|9|\%| /);
       foodinfo = info;
       axios
-        .post(`http://101.101.219.80:8080/classify`, info)
+        .post(`${URL}/classify`, info)
         .then((response) => {
           notvegan = response.data.data;
           message();

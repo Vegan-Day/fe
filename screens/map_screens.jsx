@@ -6,7 +6,8 @@ const MapScreen = (props) => {
     <WebView
       style={styles.container}
       source={{
-        uri: 'https://www.google.com/maps/d/u/0/embed?mid=11FHUuAxYceUeDMe05WkxFIoSsgZEkmWf&ehbc=2E312F&ll=37.55536542754301%2C126.97590629363&z=13',
+        uri: 'https://www.google.com/maps/d/viewer?hl=ko&ll=37.56875627635328%2C126.93398771578255&z=14&mid=1Xk83sBun2GBnN_qrAriBx2vQTrQggpr-',
+        
       }}
     />
   );
@@ -17,6 +18,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    margin: 40,
   },
 });
 
