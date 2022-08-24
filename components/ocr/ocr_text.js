@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-
+import { URL } from '@env';
 function OcrText({ navigation }, route) {
   const path = require("./SpinnerGrin.gif");
   return (
