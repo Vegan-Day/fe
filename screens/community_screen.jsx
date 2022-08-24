@@ -13,12 +13,28 @@ import { EvilIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { URL } from '@env';
 import { useIsFocused } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CommunityScreen = ({ navigation }) => {
   const [lists, setLists] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const [loginCheck, setLoginCheck] = useState(false);
+  const [name, setName] = useState('');
 
   const isFocused = useIsFocused();
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@storage_Key');
+      if (value !== null) {
+        const obj = JSON.parse(value);
+        setName(JSON.parse(obj).name);
+        setLoginCheck(true);
+      } else {
+        setLoginCheck(false);
+      }
+    } catch (error) {}
+  };
 
   const listUpdate = useCallback(() => {
     try {
@@ -45,6 +61,7 @@ const CommunityScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    getData();
     listUpdate();
   }, [isFocused]);
 
@@ -67,7 +84,11 @@ const CommunityScreen = ({ navigation }) => {
               key={list.bid}
               list={list}
               navigation={() => {
-                navigation.navigate('CommunityDetail', { bid: list.bid });
+                loginCheck
+                  ? navigation.navigate('CommunityDetail', {
+                      bid: list.bid,
+                    })
+                  : navigation.navigate('GoogleLogin');
               }}
             />
           ))}
@@ -86,7 +107,9 @@ const CommunityScreen = ({ navigation }) => {
           height: 50,
         }}
         onPress={() => {
-          navigation.navigate('CommunityWrite');
+          loginCheck
+            ? navigation.navigate('CommunityWrite', { name })
+            : navigation.navigate('GoogleLogin');
         }}
       >
         <EvilIcons name='pencil' size={40} color='white' />
@@ -105,7 +128,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginTop: 20,
   },
   title: {
     fontSize: 20,

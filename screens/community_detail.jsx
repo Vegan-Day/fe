@@ -28,6 +28,7 @@ const CommunityDetail = ({ route }) => {
   };
 
   const bid = route.params.bid;
+
   const onBoard = async () => {
     try {
       const response = await axios.get(`${URL}/community/${bid}/board`);

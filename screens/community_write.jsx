@@ -15,10 +15,12 @@ import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
-const CommunityWrite = ({ navigation }) => {
+const CommunityWrite = ({ navigation, route }) => {
   const [inputs, setInputs] = useState('');
   const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
   const [imageUrl, setImageUrl] = useState('');
+
+  const name = route.params.name;
 
   const onChange = (key, e) => {
     setInputs({
@@ -45,7 +47,7 @@ const CommunityWrite = ({ navigation }) => {
     }
     formData.append('title', inputs['title']);
     formData.append('cn', inputs['content'] || '');
-    formData.append('userName', 'test');
+    formData.append('userName', name);
 
     try {
       const response = await axios.post(`${URL}/community`, formData, {

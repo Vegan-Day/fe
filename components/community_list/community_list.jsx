@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'grey',
-    marginRight: 40,
+    marginRight: 20,
   },
   content: {
     flex: 1,
