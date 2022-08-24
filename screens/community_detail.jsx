@@ -14,20 +14,22 @@ import CommunityDetailBoard from '../components/community_detail_board/community
 import CommunityDetailComment from '../components/community_detail_comment/community_detail_comment';
 import { Feather } from '@expo/vector-icons';
 import { theme } from '../color';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const CommunityDetail = ({ route }) => {
   const [board, setBoard] = useState([]);
   const [comments, setComments] = useState([]);
   const [text, setText] = useState('');
 
+  const bid = route.params.bid;
+  const name = route.params.name;
+
   const comment = {
     writeDt: new Date(),
     cid: Date.now(),
     cm: text,
-    userName: 'test',
+    userName: name,
   };
-
-  const bid = route.params.bid;
 
   const onBoard = async () => {
     try {
@@ -54,7 +56,7 @@ const CommunityDetail = ({ route }) => {
       const response = await axios.post(`${URL}/community/comment`, {
         bid: bid,
         cm: text,
-        userName: 'test',
+        userName: name,
       });
     } catch (error) {
       console.log(error);
@@ -78,7 +80,7 @@ const CommunityDetail = ({ route }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       {board.length === 0 ? (
         <View style={{ justifyContent: 'center' }}>
           <ActivityIndicator
@@ -114,7 +116,7 @@ const CommunityDetail = ({ route }) => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -124,9 +126,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
 
-  main: {
-    maxHeight: '85%',
-  },
   input: {
     backgroundColor: 'white',
     justifyContent: 'center',
@@ -139,6 +138,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
   footer: {
+    position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 25,
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   },
   board: {
     width: '100%',
-    height: 600,
+    height: 650,
   },
 });
 export default CommunityDetail;

@@ -87,6 +87,7 @@ const CommunityScreen = ({ navigation }) => {
                 loginCheck
                   ? navigation.navigate('CommunityDetail', {
                       bid: list.bid,
+                      name,
                     })
                   : navigation.navigate('GoogleLogin');
               }}
