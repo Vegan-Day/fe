@@ -35,7 +35,9 @@ const CustomTarBarButton = ({ children, onPress }) => (
         width: 70,
         height: 70,
         borderRadius: 35,
-        backgroundColor: theme.mainColor,
+        backgroundColor: 'white',
+        borderColor: theme.mainColor,
+        borderWidth: 4,
       }}
     >
       {children}
@@ -53,8 +55,11 @@ const Menu = (props) => {
           position: 'absolute',
           elevation: 0,
           backgroundColor: '#ffffff',
-          height: 70,
+          height: 65,
           ...styles.shadow,
+          paddingVertical: 5,
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         tabBarActiveTintColor: theme.mainColor,
       }}
@@ -78,9 +83,8 @@ const Menu = (props) => {
         name='ocr'
         component={OcrScreen}
         options={{
-          tabBarLabel: '',
           tabBarIcon: (props) =>
-            TabIcon({ ...props, name: 'camera', color: 'white' }),
+            TabIcon({ ...props, name: 'leaf', color: theme.mainColor }),
           tabBarButton: (props) => <CustomTarBarButton {...props} />,
         }}
       />

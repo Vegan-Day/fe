@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const CommunityList = ({ list, navigation }) => {
   const { title, userName, writeDt, hit, comment, imagePath } = list;
+
   return (
     <TouchableOpacity
       onPress={() => {

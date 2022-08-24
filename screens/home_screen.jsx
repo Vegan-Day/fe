@@ -10,14 +10,20 @@ import {
 } from 'react-native';
 import { theme } from '../color';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import axios, { Axios } from 'axios';
 import { URL } from '@env';
 import HomeCommunity from '../components/home_community/home_community';
 import AutoHeightImage from 'react-native-auto-height-image';
+import axios from 'axios';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useIsFocused } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({ navigation }) => {
   const [bests, setBests] = useState([]);
-  const [isUser, setIsUser] = useState(null);
+  const [loginCheck, setLoginCheck] = useState(false);
+  const [name, setName] = useState('');
+
+  const isFocused = useIsFocused();
 
   const onBest = async () => {
     try {
@@ -33,22 +39,52 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate('VeganNewsScreen');
   };
 
-  useEffect(() => {
-    onBest();
-  }, []);
+  const googleLogin = async () => {
+    await navigation.navigate('GoogleLogin');
+  };
 
+  const logout = async () => {
+    await AsyncStorage.removeItem('@storage_Key');
+    setLoginCheck(false);
+  };
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@storage_Key');
+      if (value !== null) {
+        const obj = JSON.parse(value);
+        setName(JSON.parse(obj).name);
+        setLoginCheck(true);
+      }
+    } catch (error) {}
+  };
+  useEffect(() => {
+    getData();
+    onBest();
+  }, [isFocused]);
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View style={styles.login}>
-            {/* <Text style={styles.isLogin}>
-              이성호님, {'\n'}오늘도 즐거운 비건 되세요.
-            </Text> */}
-            <AutoHeightImage
-              width={360}
-              source={{ uri: `${URL}/image/login.png` }}
-            />
+            {loginCheck ? (
+              <>
+                <Text style={styles.isLogin}>
+                  {name}님, {'\n'}오늘도 즐거운 비건 되세요.
+                </Text>
+                <TouchableOpacity onPress={logout}>
+                  <MaterialIcons name='logout' size={30} color='black' />
+                </TouchableOpacity>
+              </>
+            ) : (
+              <TouchableOpacity onPress={googleLogin}>
+                <AutoHeightImage
+                  style={{ borderRadius: 10 }}
+                  width={360}
+                  source={{ uri: `${URL}/image/login2.png` }}
+                />
+              </TouchableOpacity>
+            )}
           </View>
           <TouchableOpacity onPress={onNews}>
             <Image
@@ -99,11 +135,6 @@ const HomeScreen = ({ navigation }) => {
               source={{ uri: `${URL}/image/news/ocr.png` }}
             />
           </View>
-        </View>
-        <View style={styles.logout}>
-          <TouchableOpacity>
-            <Text style={styles.logoutText}>로그아웃</Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
@@ -175,6 +206,8 @@ const styles = StyleSheet.create({
   },
   login: {
     marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   isLogin: {
     fontSize: 20,
