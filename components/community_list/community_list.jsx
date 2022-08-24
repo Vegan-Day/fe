@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 0.5,
     borderRadius: 10,
-    marginTop: 25,
+    marginTop: 20,
     paddingHorizontal: 20,
     paddingVertical: 10,
     flexDirection: 'row',
