@@ -8,6 +8,7 @@ import HomeScreen from './screens/home_screen';
 import MallScreen from './screens/mall_screen';
 import VeganNewsScreen from './screens/vegan_news_screen';
 import GoogleLogin from './components/Login/GoogleLogin';
+
 const Stack = createStackNavigator();
 
 const WholeStack = (props) => {

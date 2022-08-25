@@ -1,6 +1,5 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { URL } from '@env';
 import { theme } from '../../color';
 import * as Linking from 'expo-linking';
 
@@ -73,4 +72,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
 export default MallProduct;

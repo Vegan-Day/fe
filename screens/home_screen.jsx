@@ -30,9 +30,7 @@ const HomeScreen = ({ navigation }) => {
       const response = await axios.get(`${URL}/best`);
       const data = response.data.data;
       setBests(data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const onNews = () => {
@@ -58,10 +56,12 @@ const HomeScreen = ({ navigation }) => {
       }
     } catch (error) {}
   };
+
   useEffect(() => {
     getData();
     onBest();
   }, [isFocused]);
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>

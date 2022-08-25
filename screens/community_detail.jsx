@@ -36,9 +36,7 @@ const CommunityDetail = ({ route }) => {
       const response = await axios.get(`${URL}/community/${bid}/board`);
       const data = response.data.data;
       setBoard(data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const onComment = async () => {
@@ -46,9 +44,7 @@ const CommunityDetail = ({ route }) => {
       const response = await axios.get(`${URL}/community/${bid}/comment`);
       const data = response.data.data;
       setComments(data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const onWrite = async () => {
@@ -58,9 +54,7 @@ const CommunityDetail = ({ route }) => {
         cm: text,
         userName: name,
       });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const onSubmit = () => {
@@ -141,7 +135,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 25,
+    marginTop: 30,
     flexDirection: 'row',
   },
   send: {

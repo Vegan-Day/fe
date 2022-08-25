@@ -49,7 +49,6 @@ const Menu = (props) => {
   return (
     <Tab.Navigator
       screenOptions={{
-        // tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: {
           position: 'absolute',
@@ -78,7 +77,6 @@ const Menu = (props) => {
           tabBarIcon: (props) => TabIcon({ ...props, name: 'chat' }),
         }}
       />
-
       <Tab.Screen
         name='ocr'
         component={OcrScreen}

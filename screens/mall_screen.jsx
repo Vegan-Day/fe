@@ -11,7 +11,6 @@ import {
 import { theme } from '../color';
 import MallProduct from '../components/mall_product/mall_product';
 import { URL } from '@env';
-import * as Linking from 'expo-linking';
 
 const MallScreen = (props) => {
   const [keyword, setKeyword] = useState('');
@@ -26,9 +25,7 @@ const MallScreen = (props) => {
       );
       const data = response.data.data;
       setProducts(data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

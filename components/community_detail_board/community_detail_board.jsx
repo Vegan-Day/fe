@@ -1,15 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  ActivityIndicator,
-  Image,
-  useWindowDimensions,
-} from 'react-native';
-import axios from 'axios';
+import React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { URL } from '@env';
 import moment from 'moment';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { theme } from '../../color';
@@ -76,7 +67,6 @@ const styles = StyleSheet.create({
     height: 50,
     marginRight: 10,
   },
-  userDate: {},
   user: {
     fontSize: 20,
     fontWeight: '500',

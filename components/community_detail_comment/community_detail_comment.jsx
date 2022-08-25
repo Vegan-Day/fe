@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 10,
   },
-  header: {},
   content: {
     marginTop: 10,
     borderBottomColor: 'grey',

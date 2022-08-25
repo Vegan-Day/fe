@@ -42,9 +42,7 @@ const CommunityScreen = ({ navigation }) => {
         .get(`${URL}/community`)
         .then((response) => response.data.data)
         .then((data) => setLists(data));
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   });
 
   const onSelect = () => {
@@ -55,9 +53,7 @@ const CommunityScreen = ({ navigation }) => {
         .then((data) => {
           setLists(data);
         });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { theme } from '../../color';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import AutoHeightImage from 'react-native-auto-height-image';
 
 const Header = ({ navigation }) => {

@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  StyleSheet,
-  View,
-  Image,
-  ScrollView,
-  useWindowDimensions,
-} from 'react-native';
+import { StyleSheet, View, Image, ScrollView } from 'react-native';
 
 const VeganNewsScreen = (props) => {
   return (

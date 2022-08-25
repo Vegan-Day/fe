@@ -5,9 +5,10 @@ import {
   Image,
   Pressable,
   TouchableOpacity,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
-import { onChange } from 'react-native-reanimated';
 import { theme } from '../color';
 import axios from 'axios';
 import { URL } from '@env';
@@ -57,7 +58,7 @@ const CommunityWrite = ({ navigation, route }) => {
       const data = response.data;
 
       if (data.statusCode === 400) {
-        Alert.alert('내용을 입력해 주세요!');
+        Alert.alert('제목 및 내용을 입력해 주세요!');
       } else {
         setInputs('');
         setImageUrl('');
@@ -75,6 +76,7 @@ const CommunityWrite = ({ navigation, route }) => {
         return null;
       }
     }
+
     // 이미지 업로드 기능
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -90,52 +92,50 @@ const CommunityWrite = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.title}>
-        <Text style={styles.text}>제목</Text>
-        <TextInput
-          name='title'
-          style={styles.input}
-          maxLength={30}
-          onChangeText={(e) => onChange('title', e)}
-        ></TextInput>
-      </View>
-      <View style={styles.content}>
-        <Text style={styles.text}>내용</Text>
-        <TextInput
-          name='content'
-          style={styles.input}
-          multiline={true}
-          maxLength={200}
-          numberOfLines={10}
-          textAlignVertical='top'
-          onChangeText={(e) => onChange('content', e)}
-        />
-        <View style={styles.imageView}>
-          <Text style={styles.text}>사진첨부</Text>
-          <Text style={{ marginTop: 10, color: 'grey' }}>
-            관련 사진을 첨부해주세요. (1장)
-          </Text>
-          <View style={styles.imageInput}>
-            <TouchableOpacity style={styles.imageBtn} onPress={uploadImage}>
-              <FontAwesome name='plus' size={30} color='white' />
-            </TouchableOpacity>
-            <Pressable style={styles.imageBtn}>
-              {imageUrl.length === 0 ? (
-                <AntDesign name='picture' size={30} color='white' />
-              ) : (
-                <Image style={styles.image} source={{ uri: imageUrl }} />
-              )}
-            </Pressable>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <View style={styles.title}>
+          <Text style={styles.text}>제목</Text>
+          <TextInput
+            name='title'
+            style={styles.input}
+            maxLength={30}
+            onChangeText={(e) => onChange('title', e)}
+          ></TextInput>
+        </View>
+        <View style={styles.content}>
+          <Text style={styles.text}>내용</Text>
+          <TextInput
+            name='content'
+            style={styles.input}
+            multiline={true}
+            maxLength={200}
+            numberOfLines={10}
+            textAlignVertical='top'
+            onChangeText={(e) => onChange('content', e)}
+          />
+          <View style={styles.imageView}>
+            <Text style={styles.text}>사진첨부</Text>
+            <Text style={{ marginTop: 10, color: 'grey' }}>
+              관련 사진을 첨부해주세요. (1장)
+            </Text>
+            <View style={styles.imageInput}>
+              <TouchableOpacity style={styles.imageBtn} onPress={uploadImage}>
+                <FontAwesome name='plus' size={30} color='white' />
+              </TouchableOpacity>
+              <Pressable style={styles.imageBtn}>
+                {imageUrl.length === 0 ? (
+                  <AntDesign name='picture' size={30} color='white' />
+                ) : (
+                  <Image style={styles.image} source={{ uri: imageUrl }} />
+                )}
+              </Pressable>
+            </View>
           </View>
         </View>
-        {/* <Pressable onPress={uploadImage}>
-          <Text style={styles.text}>사진첨부</Text>
-          <Image style={styles.image} source={{ uri: imageUrl }} />
-        </Pressable> */}
+        <Button title='등록' color={theme.mainColor} onPress={onEnroll} />
       </View>
-      <Button title='등록' color={theme.mainColor} onPress={onEnroll} />
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
