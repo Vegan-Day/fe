@@ -1,7 +1,9 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 import { theme } from '../../color';
 import AutoHeightImage from 'react-native-auto-height-image';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import ScreenCaptureView from '../screen_capture/screen_capture';
 
 const Header = ({ navigation }) => {
   return (
@@ -12,6 +14,7 @@ const Header = ({ navigation }) => {
           source={require('../../assets/logo.png')}
         />
       </View>
+      <ScreenCaptureView />
     </View>
   );
 };
@@ -29,6 +32,9 @@ const styles = StyleSheet.create({
     color: theme.mainColor,
     paddingHorizontal: 20,
     marginTop: 20,
+  },
+  transmit: {
+    fontSize: 20,
   },
 });
 
