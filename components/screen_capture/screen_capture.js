@@ -14,7 +14,7 @@ import { captureRef } from 'react-native-view-shot';
 import React from 'react';
 import ViewShot from 'react-native-view-shot';
 
-const ScreenCaptureView = (props) => {
+const ScreenCaptureView = ({ capture }) => {
   const deActivate = async () => await ScreenCapture.allowScreenCaptureAsync();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const ScreenCaptureView = (props) => {
   });
   return (
     <View style={styles.capture}>
-      <TouchableOpacity onPress={deActivate}>
+      <TouchableOpacity onPress={capture}>
         <Text style={styles.transmit}>화면 전송</Text>
       </TouchableOpacity>
     </View>

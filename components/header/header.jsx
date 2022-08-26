@@ -5,7 +5,7 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ScreenCaptureView from '../screen_capture/screen_capture';
 
-const Header = ({ navigation }) => {
+const Header = ({ navigation, capture }) => {
   return (
     <View style={styles.container}>
       <View style={styles.logo}>
@@ -14,7 +14,7 @@ const Header = ({ navigation }) => {
           source={require('../../assets/logo.png')}
         />
       </View>
-      <ScreenCaptureView />
+      <ScreenCaptureView capture={capture} />
     </View>
   );
 };
