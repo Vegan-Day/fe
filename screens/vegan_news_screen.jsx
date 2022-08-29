@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Image, ScrollView } from 'react-native';
+import { URL } from '@env';
 
 const VeganNewsScreen = (props) => {
   return (
@@ -7,7 +8,7 @@ const VeganNewsScreen = (props) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <Image
           style={styles.image}
-          source={{ uri: 'http://101.101.219.80:8080/image/news/202208.png' }}
+          source={{ uri: `${URL}/image/news/202208.png` }}
         />
       </ScrollView>
     </View>

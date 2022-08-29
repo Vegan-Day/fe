@@ -22,7 +22,6 @@ const HomeScreen = ({ navigation }) => {
   const [bests, setBests] = useState([]);
   const [loginCheck, setLoginCheck] = useState(false);
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const isFocused = useIsFocused();
 
   const onBest = async () => {
@@ -52,7 +51,6 @@ const HomeScreen = ({ navigation }) => {
       if (value !== null) {
         const obj = JSON.parse(value);
         setName(JSON.parse(obj).name);
-        setEmail(JSON.parse(obj).email);
         setLoginCheck(true);
       }
     } catch (error) {}

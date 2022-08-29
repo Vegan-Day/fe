@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { theme } from '../../color';
 import AutoHeightImage from 'react-native-auto-height-image';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import ScreenCaptureView from '../screen_capture/screen_capture';
 
-const Header = ({ navigation, capture }) => {
+const Header = ({ capture }) => {
   return (
     <View style={styles.container}>
       <View style={styles.logo}>

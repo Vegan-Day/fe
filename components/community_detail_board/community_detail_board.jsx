@@ -7,7 +7,6 @@ import { theme } from '../../color';
 import AutoHeightImage from 'react-native-auto-height-image';
 
 const CommunityDetailBoard = ({ board }) => {
-  console.log(board);
   const { userName, title, writeDt, cn, hit, comment, attachfile } = board[0];
 
   const date = moment(writeDt).format('YYYY/MM/DD HH:mm');

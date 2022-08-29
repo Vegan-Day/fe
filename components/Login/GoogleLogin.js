@@ -66,7 +66,6 @@ function GoogleLogin({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* <Image style={styles.logo} source={logo} /> */}
       <View style={styles.textView}>
         <Text style={styles.text}>로그인하고,</Text>
         <Text style={styles.text}>다양한 비건 정보 받아보세요</Text>

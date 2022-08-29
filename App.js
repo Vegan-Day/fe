@@ -2,16 +2,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import Header from './components/header/header';
 import WholeStack from './stack';
 import ViewShot from 'react-native-view-shot';
-import { useRef, useEffect, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { useRef, useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { URL } from '@env';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function App() {
-  const ref = useRef();
   const [email, setEmail] = useState('');
-  console.log(email);
+  const ref = useRef();
+
   const onEnroll = async (uri) => {
     const formData = new FormData();
 
@@ -23,18 +23,14 @@ function App() {
 
       formData.append('file', { uri: localUri, name: filename, type });
     }
-    formData.append('email', `${email}`);
+    formData.append('email', email);
 
     try {
       const response = await axios.post(`${URL}/email`, formData, {
         headers: { 'content-type': 'multipart/form-data' },
         transformRequest: (formData) => formData,
       });
-      const data = response.data;
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const getData = async () => {
@@ -44,14 +40,11 @@ function App() {
         const obj = JSON.parse(value);
         setEmail(JSON.parse(obj).email);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const captureUri = () => {
     ref.current.capture().then((uri) => {
-      console.log(uri);
       getData();
       onEnroll(uri);
     });

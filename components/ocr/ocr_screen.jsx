@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Button, Image, Alert } from "react-native";
-import { Camera, CameraType } from "expo-camera";
-import * as ImagePicker from "expo-image-picker";
-import { AntDesign } from "@expo/vector-icons";
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
+import { Camera, CameraType } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
+import { AntDesign } from '@expo/vector-icons';
 import { URL } from '@env';
-
-import {
-  onPress,
-  style,
-} from "deprecated-react-native-prop-types/DeprecatedTextPropTypes";
-import axios from "axios";
-import OcrLoading from "./OcrLoading";
-import { theme } from "../../color";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { FontAwesome } from "@expo/vector-icons";
+import axios from 'axios';
+import OcrLoading from './OcrLoading';
+import { theme } from '../../color';
+import { FontAwesome } from '@expo/vector-icons';
 
 let img = null;
-let foodinfo = "";
-let notvegan = "";
+let notvegan = '';
 
 function OcrScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -29,7 +22,7 @@ function OcrScreen({ navigation }) {
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === "granted");
+      setHasPermission(status === 'granted');
     })();
   }, []);
   //카메라 허용 안될 때
@@ -64,21 +57,17 @@ function OcrScreen({ navigation }) {
   const onEnroll = async () => {
     const formData = new FormData();
     const localUri = img;
-    const filename = localUri.split("/").pop();
-    const match = /\.(\w+)$/.exec(filename ?? "");
+    const filename = localUri.split('/').pop();
+    const match = /\.(\w+)$/.exec(filename ?? '');
     const type = match ? `image / ${match[1]}` : `image`;
-    formData.append("file", { uri: localUri, name: filename, type });
+    formData.append('file', { uri: localUri, name: filename, type });
     try {
       setLoading(true);
-      const response = await axios.post(
-        `${URL}/ocr`,
-        formData,
-        {
-          headers: { "content-type": "multipart/form-data" },
-          transformRequest: (formData) => formData,
-        }
-      );
-      let info = "";
+      const response = await axios.post(`${URL}/ocr`, formData, {
+        headers: { 'content-type': 'multipart/form-data' },
+        transformRequest: (formData) => formData,
+      });
+      let info = '';
       JSON.parse(response.data.data).images[0].fields.map((item) => {
         info += item.inferText;
       });
@@ -96,24 +85,23 @@ function OcrScreen({ navigation }) {
       //info가 null일 경우, setLoding(false), 값이 있을 경우 setLoding(true)
       setLoading(false);
     } catch (error) {
-      console.log("오류", error);
+      console.log('오류', error);
     }
   };
 
   const message = () => {
     notvegan
-      ? Alert.alert("알림", `${notvegan} 등 동물성 성분이 포함되어있습니다.`, [
-          { text: "확인" },
+      ? Alert.alert('알림', `${notvegan} 등 동물성 성분이 포함되어있습니다.`, [
+          { text: '확인' },
         ])
-      : Alert.alert("알림", `비건식품입니다.`, [{ text: "확인" }]);
+      : Alert.alert('알림', `비건식품입니다.`, [{ text: '확인' }]);
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
       {loading ? (
         <>
-          <OcrLoading img={img}/>
+          <OcrLoading img={img} />
         </>
       ) : null}
       <View style={styles.container}>
@@ -121,15 +109,15 @@ function OcrScreen({ navigation }) {
           style={styles.camera}
           type={type}
           ref={(ref) => setCamera(ref)}
-          ratio="1:2"
+          ratio='1:2'
         ></Camera>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={() => takePicture()}>
-          <AntDesign name="camera" size={40} color={theme.mainColor} />
+          <AntDesign name='camera' size={40} color={theme.mainColor} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => pickImage()}>
-          <FontAwesome name="photo" size={40} color={theme.mainColor} />
+          <FontAwesome name='photo' size={40} color={theme.mainColor} />
         </TouchableOpacity>
       </View>
     </View>
@@ -138,8 +126,8 @@ function OcrScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 3.8,
-    flexDirection: "row",
-    backgroundColor: "white",
+    flexDirection: 'row',
+    backgroundColor: 'white',
   },
   camera: {
     flex: 1,
@@ -150,9 +138,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 0.7,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    backgroundColor: "white",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: 'white',
   },
   scrollimage: {
     flex: 5,
